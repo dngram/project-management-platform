@@ -21,11 +21,13 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
+    private final ActivityLogService activityLogService;
 
-    public TaskService(TaskRepository taskRepository, ProjectRepository projectRepository,  UserRepository userRepository) {
+    public TaskService(TaskRepository taskRepository, ProjectRepository projectRepository,  UserRepository userRepository, ActivityLogService activityLogService) {
         this.taskRepository = taskRepository;
         this.projectRepository = projectRepository;
         this.userRepository = userRepository;
+        this.activityLogService = activityLogService;
     }
 
     public TaskResponse createTask(TaskRequest request) {
@@ -95,6 +97,11 @@ public class TaskService {
         task.setAssignedUser(user);
 
         task = taskRepository.save(task);
+        activityLogService.log(
+                task,
+                user,
+                "Task assigned to " + user.getUsername()
+        );
 
         return mapToResponse(task);
     }

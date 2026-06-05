@@ -20,15 +20,17 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
+    private final ActivityLogService activityLogService;
 
     public CommentService(
             CommentRepository commentRepository,
             TaskRepository taskRepository,
-            UserRepository userRepository) {
+            UserRepository userRepository, ActivityLogService activityLogService) {
 
         this.commentRepository = commentRepository;
         this.taskRepository = taskRepository;
         this.userRepository = userRepository;
+        this.activityLogService = activityLogService;
     }
 
     private CommentResponse mapToResponse(Comment comment) {
@@ -63,6 +65,11 @@ public class CommentService {
                 .build();
 
         comment = commentRepository.save(comment);
+        activityLogService.log(
+                task,
+                user,
+                "Comment added: " + request.getMessage()
+        );
 
         return mapToResponse(comment);
     }
