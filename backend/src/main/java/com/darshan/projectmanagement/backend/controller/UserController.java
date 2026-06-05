@@ -1,0 +1,49 @@
+package com.darshan.projectmanagement.backend.controller;
+
+import com.darshan.projectmanagement.backend.dto.UserRequest;
+import com.darshan.projectmanagement.backend.dto.UserResponse;
+import com.darshan.projectmanagement.backend.service.UserService;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/users")
+public class UserController {
+
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @PostMapping
+    public UserResponse createUser(
+            @Valid @RequestBody UserRequest request) {
+
+        return userService.createUser(request);
+    }
+
+    @GetMapping
+    public List<UserResponse> getAllUsers() {
+
+        return userService.getAllUsers();
+    }
+
+    @GetMapping("/{id}")
+    public UserResponse getUserById(
+            @PathVariable Long id) {
+
+        return userService.getUserById(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteUser(
+            @PathVariable Long id) {
+
+        userService.deleteUser(id);
+
+        return "User deleted successfully";
+    }
+}
