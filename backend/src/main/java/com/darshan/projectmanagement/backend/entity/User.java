@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -33,4 +34,7 @@ public class User {
     private UserRole role;
 
     private LocalDateTime createdAt;
+
+    @OneToMany(mappedBy = "user")
+    private List<Notification> notifications;
 }

@@ -22,12 +22,14 @@ public class TaskService {
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
     private final ActivityLogService activityLogService;
+    private final NotificationService notificationService;
 
-    public TaskService(TaskRepository taskRepository, ProjectRepository projectRepository,  UserRepository userRepository, ActivityLogService activityLogService) {
+    public TaskService(TaskRepository taskRepository, ProjectRepository projectRepository,  UserRepository userRepository, ActivityLogService activityLogService, NotificationService notificationService) {
         this.taskRepository = taskRepository;
         this.projectRepository = projectRepository;
         this.userRepository = userRepository;
         this.activityLogService = activityLogService;
+        this.notificationService = notificationService;
     }
 
     public TaskResponse createTask(TaskRequest request) {
@@ -97,6 +99,11 @@ public class TaskService {
         task.setAssignedUser(user);
 
         task = taskRepository.save(task);
+        notificationService.createNotification(
+                user,
+                "You have been assigned task: "
+                        + task.getTitle()
+        );
         activityLogService.log(
                 task,
                 user,

@@ -21,16 +21,18 @@ public class CommentService {
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
     private final ActivityLogService activityLogService;
+    private final NotificationService notificationService;
 
     public CommentService(
             CommentRepository commentRepository,
             TaskRepository taskRepository,
-            UserRepository userRepository, ActivityLogService activityLogService) {
+            UserRepository userRepository, ActivityLogService activityLogService, NotificationService notificationService) {
 
         this.commentRepository = commentRepository;
         this.taskRepository = taskRepository;
         this.userRepository = userRepository;
         this.activityLogService = activityLogService;
+        this.notificationService = notificationService;
     }
 
     private CommentResponse mapToResponse(Comment comment) {
@@ -65,6 +67,14 @@ public class CommentService {
                 .build();
 
         comment = commentRepository.save(comment);
+        if (task.getAssignedUser() != null) {
+
+            notificationService.createNotification(
+                    task.getAssignedUser(),
+                    "New comment on task: "
+                            + task.getTitle()
+            );
+        }
         activityLogService.log(
                 task,
                 user,
