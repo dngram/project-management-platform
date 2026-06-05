@@ -6,6 +6,7 @@ import com.darshan.projectmanagement.backend.dto.RegisterRequest;
 import com.darshan.projectmanagement.backend.entity.User;
 import com.darshan.projectmanagement.backend.exception.InvalidCredentialsException;
 import com.darshan.projectmanagement.backend.repository.UserRepository;
+import com.darshan.projectmanagement.backend.security.JwtService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,13 +17,16 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
+
 
     public AuthService(
             UserRepository userRepository,
-            PasswordEncoder passwordEncoder) {
+            PasswordEncoder passwordEncoder, JwtService jwtService) {
 
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
     }
 
     public String register(RegisterRequest request) {
@@ -64,8 +68,12 @@ public class AuthService {
             throw new InvalidCredentialsException();
         }
 
+        String token =
+                jwtService.generateToken(
+                        user.getEmail());
+
         return LoginResponse.builder()
-                .token("JWT_COMING_NEXT")
+                .token(token)
                 .username(user.getUsername())
                 .role(user.getRole().name())
                 .build();
