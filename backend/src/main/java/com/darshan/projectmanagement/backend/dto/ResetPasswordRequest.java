@@ -1,7 +1,5 @@
 package com.darshan.projectmanagement.backend.dto;
 
-import com.darshan.projectmanagement.backend.enums.UserRole;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
@@ -9,14 +7,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RegisterRequest {
+public class ResetPasswordRequest {
 
-    @NotBlank(message = "Username is required")
-    private String username;
-
-    @Email
-    @NotBlank(message = "Email is required")
-    private String email;
+    @NotBlank(message = "Token is required")
+    private String token;
 
     @NotBlank(message = "Password is required")
     @Pattern(
@@ -25,7 +19,5 @@ public class RegisterRequest {
             message =
                     "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one digit and one special character"
     )
-    private String password;
-
-    private UserRole role;
+    private String newPassword;
 }
