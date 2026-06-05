@@ -4,10 +4,13 @@ import com.darshan.projectmanagement.backend.dto.TaskRequest;
 import com.darshan.projectmanagement.backend.dto.TaskResponse;
 import com.darshan.projectmanagement.backend.entity.Project;
 import com.darshan.projectmanagement.backend.entity.Task;
+import com.darshan.projectmanagement.backend.entity.User;
 import com.darshan.projectmanagement.backend.exception.ProjectNotFoundException;
 import com.darshan.projectmanagement.backend.exception.TaskNotFoundException;
+import com.darshan.projectmanagement.backend.exception.UserNotFoundException;
 import com.darshan.projectmanagement.backend.repository.ProjectRepository;
 import com.darshan.projectmanagement.backend.repository.TaskRepository;
+import com.darshan.projectmanagement.backend.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,10 +20,12 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
     private final ProjectRepository projectRepository;
+    private final UserRepository userRepository;
 
-    public TaskService(TaskRepository taskRepository, ProjectRepository projectRepository) {
+    public TaskService(TaskRepository taskRepository, ProjectRepository projectRepository,  UserRepository userRepository) {
         this.taskRepository = taskRepository;
         this.projectRepository = projectRepository;
+        this.userRepository = userRepository;
     }
 
     public TaskResponse createTask(TaskRequest request) {
@@ -75,6 +80,25 @@ public class TaskService {
         taskRepository.delete(task);
     }
 
+    public TaskResponse assignTask(
+            Long taskId,
+            Long userId) {
+
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() ->
+                        new TaskNotFoundException(taskId));
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() ->
+                        new UserNotFoundException(userId));
+
+        task.setAssignedUser(user);
+
+        task = taskRepository.save(task);
+
+        return mapToResponse(task);
+    }
+
     private TaskResponse mapToResponse(Task task) {
 
         return TaskResponse.builder()
@@ -84,6 +108,25 @@ public class TaskService {
                 .status(task.getStatus())
                 .projectId(task.getProject().getId())
                 .projectName(task.getProject().getName())
+                .assignedUserId(
+                        task.getAssignedUser() != null
+                                ? task.getAssignedUser().getId()
+                                : null
+                )
+                .assignedUsername(
+                        task.getAssignedUser() != null
+                                ? task.getAssignedUser().getUsername()
+                                : null
+                )
                 .build();
+    }
+
+    public List<TaskResponse> getMyTasks(String email) {
+
+        return taskRepository
+                .findByAssignedUserEmail(email)
+                .stream()
+                .map(this::mapToResponse)
+                .toList();
     }
 }
