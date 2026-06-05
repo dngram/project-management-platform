@@ -5,6 +5,7 @@ import com.darshan.projectmanagement.backend.dto.UserResponse;
 import com.darshan.projectmanagement.backend.entity.User;
 import com.darshan.projectmanagement.backend.exception.UserNotFoundException;
 import com.darshan.projectmanagement.backend.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -14,9 +15,11 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository,  PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     private UserResponse mapToResponse(User user) {
@@ -35,7 +38,7 @@ public class UserService {
         User user = User.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
-                .password(request.getPassword())
+                .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole())
                 .createdAt(LocalDateTime.now())
                 .build();
