@@ -4,6 +4,7 @@ import com.darshan.projectmanagement.backend.dto.UserRequest;
 import com.darshan.projectmanagement.backend.dto.UserResponse;
 import com.darshan.projectmanagement.backend.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,6 +40,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String deleteUser(
             @PathVariable Long id) {
 
