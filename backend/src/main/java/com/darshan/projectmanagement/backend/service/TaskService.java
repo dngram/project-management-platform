@@ -66,7 +66,7 @@ public class TaskService {
                 .orElseThrow(() -> new TaskNotFoundException(id));
     }
 
-    public Task updateTask(Long id, Task updatedTask) {
+    public TaskResponse updateTask(Long id, Task updatedTask) {
 
         Task existingTask = getTaskById(id);
 
@@ -74,7 +74,10 @@ public class TaskService {
         existingTask.setDescription(updatedTask.getDescription());
         existingTask.setStatus(updatedTask.getStatus());
 
-        return taskRepository.save(existingTask);
+        Task savedTask =
+                taskRepository.save(existingTask);
+
+        return mapToResponse(savedTask);
     }
 
     public void deleteTask(Long id) {

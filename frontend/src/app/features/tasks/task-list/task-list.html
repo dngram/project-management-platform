@@ -1,1 +1,152 @@
-<p>task-list works!</p>
+<h2>Tasks</h2>
+
+<table border="1">
+
+  <thead>
+
+    <tr>
+
+      <th>ID</th>
+
+      <th>Title</th>
+
+      <th>Description</th>
+
+      <th>Status</th>
+
+      <th>Project</th>
+
+      <th>Assigned User</th>
+
+      <th>Actions</th>
+
+    </tr>
+
+  </thead>
+
+  <tbody>
+
+    <tr
+      *ngFor="let task of tasks">
+
+      <td>
+        {{ task.id }}
+      </td>
+
+      <td>
+        {{ task.title }}
+      </td>
+
+      <td>
+        {{ task.description }}
+      </td>
+
+      <td>
+        {{ task.status }}
+      </td>
+
+      <td>
+        {{ task.projectName }}
+      </td>
+
+      <td>
+        {{ task.assignedUsername }}
+      </td>
+
+      <td>
+
+        <button
+          (click)="startEdit(task)">
+
+          Edit
+
+        </button>
+
+        <button
+          (click)="deleteTask(task.id)">
+
+          Delete
+
+        </button>
+
+      </td>
+
+    </tr>
+
+  </tbody>
+
+</table>
+
+<hr>
+
+<h2>
+
+  {{ editingTaskId
+      ? 'Update Task'
+      : 'Create Task' }}
+
+</h2>
+
+<input
+  type="text"
+  placeholder="Task Title"
+  [(ngModel)]="title">
+
+<br><br>
+
+<textarea
+  placeholder="Description"
+  [(ngModel)]="description">
+</textarea>
+
+<br><br>
+
+<select
+  [(ngModel)]="status">
+
+  <option value="TODO">
+    TODO
+  </option>
+
+  <option value="IN_PROGRESS">
+    IN_PROGRESS
+  </option>
+
+  <option value="DONE">
+    DONE
+  </option>
+
+</select>
+
+<br><br>
+
+<select
+  [(ngModel)]="projectId">
+
+  <option
+    *ngFor="let project of projects"
+    [value]="project.id">
+
+    {{ project.name }}
+
+  </option>
+
+</select>
+
+<br><br>
+
+<button
+  *ngIf="editingTaskId === null"
+  (click)="createTask()">
+
+  Create Task
+
+</button>
+
+<button
+  *ngIf="editingTaskId !== null"
+  (click)="updateTask()">
+
+  Update Task
+
+</button>
