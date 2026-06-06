@@ -1,27 +1,49 @@
-<h1>Project Management Platform</h1>
+<div class="dashboard-container">
 
-<p>
-  Welcome {{ username }}
-</p>
+    <h1>
+        Project Management Platform
+    </h1>
 
-<p>
-  Role: {{ role }}
-</p>
+    <div class="user-info">
 
-<hr>
+        <p>
+            Welcome,
+            <strong>{{ username }}</strong>
+        </p>
 
-<button routerLink="/projects">
-  Projects
-</button>
+        <p>
+            Role:
+            <strong>{{ role }}</strong>
+        </p>
 
-<button routerLink="/tasks">
-  Tasks
-</button>
+    </div>
 
-<button routerLink="/notifications">
-  Notifications
-</button>
+    <hr>
 
-<button (click)="logout()">
-  Logout
-</button>
+    <div class="navigation">
+
+        <button routerLink="/projects">
+            Projects
+        </button>
+
+        <button routerLink="/tasks">
+            Tasks
+        </button>
+
+        <button routerLink="/notifications">
+            Notifications
+        </button>
+
+    </div>
+
+    <hr>
+
+    <button
+        class="logout-btn"
+        (click)="logout()">
+
+        Logout
+
+    </button>
+
+</div>

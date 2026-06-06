@@ -1,0 +1,31 @@
+.dashboard-container {
+
+    max-width: 800px;
+
+    margin: 50px auto;
+
+    text-align: center;
+}
+
+.navigation {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 15px;
+
+    margin: 20px 0;
+}
+
+button {
+
+    padding: 10px 20px;
+
+    cursor: pointer;
+}
+
+.logout-btn {
+
+    margin-top: 20px;
+}
