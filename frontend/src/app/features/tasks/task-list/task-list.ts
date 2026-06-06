@@ -14,6 +14,12 @@ from '../../../shared/models/task-response';
 import { ProjectResponse }
 from '../../../shared/models/project-response';
 
+import { UserService }
+from '../../../core/services/user';
+
+import { UserResponse }
+from '../../../shared/models/user-response';
+
 @Component({
   selector: 'app-task-list',
   standalone: true,
@@ -41,9 +47,15 @@ export class TaskListComponent {
   editingTaskId:
     number | null = null;
 
+  users: UserResponse[] = [];
+
+selectedUsers:
+  { [taskId: number]: number } = {};
+
   constructor(
     private taskService: TaskService,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -51,6 +63,8 @@ export class TaskListComponent {
     this.loadTasks();
 
     this.loadProjects();
+
+    this.loadUsers();
   }
 
   loadTasks(): void {
@@ -92,6 +106,24 @@ export class TaskListComponent {
         }
       });
   }
+
+  loadUsers(): void {
+
+  this.userService
+    .getUsers()
+    .subscribe({
+
+      next: data => {
+
+        this.users = data;
+      },
+
+      error: err => {
+
+        console.error(err);
+      }
+    });
+}
 
   createTask(): void {
 
@@ -217,4 +249,47 @@ export class TaskListComponent {
 
     this.status = 'TODO';
   }
+
+  assignTask(
+  taskId: number
+): void {
+
+  const userId =
+    this.selectedUsers[taskId];
+
+  if (!userId) {
+
+    alert(
+      'Please select a user'
+    );
+
+    return;
+  }
+
+  this.taskService
+    .assignTask(
+      taskId,
+      userId
+    )
+    .subscribe({
+
+      next: () => {
+
+        alert(
+          'Task assigned'
+        );
+
+        this.loadTasks();
+      },
+
+      error: err => {
+
+        console.error(err);
+
+        alert(
+          'Assignment failed'
+        );
+      }
+    });
+}  
 }

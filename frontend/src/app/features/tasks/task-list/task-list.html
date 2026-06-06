@@ -20,6 +20,8 @@
 
       <th>Actions</th>
 
+      <th>Assign User</th>
+
     </tr>
 
   </thead>
@@ -52,6 +54,37 @@
       <td>
         {{ task.assignedUsername }}
       </td>
+
+      <td>
+
+        <select
+            [(ngModel)]="selectedUsers[task.id]">
+
+            <option
+            [ngValue]="null">
+
+            Select User
+
+            </option>
+
+            <option
+            *ngFor="let user of users"
+            [ngValue]="user.id">
+
+            {{ user.username }}
+
+            </option>
+
+        </select>
+
+        <button
+            (click)="assignTask(task.id)">
+
+            Assign
+
+        </button>
+
+        </td>
 
       <td>
 

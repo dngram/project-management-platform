@@ -64,4 +64,23 @@ export class TaskService {
       }
     );
   }
+
+  assignTask(
+  taskId: number,
+  userId: number
+) {
+
+  return this.http.put(
+    `${this.apiUrl}/${taskId}/assign/${userId}`,
+    {}
+  );
+}
+
+getMyTasks():
+  Observable<TaskResponse[]> {
+
+  return this.http.get<TaskResponse[]>(
+    `${this.apiUrl}/my-tasks`
+  );
+}
 }

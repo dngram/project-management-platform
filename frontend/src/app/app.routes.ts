@@ -10,6 +10,7 @@ import { DashboardComponent } from './features/dashboard/dashboard';
 import { ProjectListComponent } from './features/projects/project-list/project-list';
 
 import { TaskListComponent } from './features/tasks/task-list/task-list';
+import { MyTasksComponent } from './features/tasks/my-tasks/my-tasks';
 
 import { NotificationListComponent } from './features/notifications/notification-list/notification-list';
 import { authGuard } from './core/guards/auth-guard';
@@ -63,6 +64,12 @@ export const routes: Routes = [
   {
     path: 'notifications',
     component: NotificationListComponent,
+    canActivate: [authGuard]
+  },
+
+  {
+    path: 'my-tasks',
+    component: MyTasksComponent,
     canActivate: [authGuard]
   }
 
