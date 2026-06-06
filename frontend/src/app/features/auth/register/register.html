@@ -1,0 +1,53 @@
+<h2>Register</h2>
+
+<input
+  type="text"
+  placeholder="Username"
+  [(ngModel)]="username">
+
+<br><br>
+
+<input
+  type="email"
+  placeholder="Email"
+  [(ngModel)]="email">
+
+<br><br>
+
+<input
+  type="password"
+  placeholder="Password"
+  [(ngModel)]="password">
+
+<br><br>
+
+<select [(ngModel)]="role">
+
+  <option value="ADMIN">
+    ADMIN
+  </option>
+
+  <option value="MANAGER">
+    MANAGER
+  </option>
+
+  <option value="MEMBER">
+    MEMBER
+  </option>
+
+</select>
+
+<br><br>
+
+<button (click)="register()">
+
+  Register
+
+</button>
+
+<p>
+  Already have an account?
+  <a routerLink="/login">
+    Login
+  </a>
+</p>

@@ -1,0 +1,27 @@
+<h1>Project Management Platform</h1>
+
+<p>
+  Welcome {{ username }}
+</p>
+
+<p>
+  Role: {{ role }}
+</p>
+
+<hr>
+
+<button routerLink="/projects">
+  Projects
+</button>
+
+<button routerLink="/tasks">
+  Tasks
+</button>
+
+<button routerLink="/notifications">
+  Notifications
+</button>
+
+<button (click)="logout()">
+  Logout
+</button>
