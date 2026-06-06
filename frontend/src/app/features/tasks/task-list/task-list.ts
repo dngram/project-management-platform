@@ -20,6 +20,18 @@ from '../../../core/services/user';
 import { UserResponse }
 from '../../../shared/models/user-response';
 
+import { CommentService }
+from '../../../core/services/comment';
+
+import { CommentResponse }
+from '../../../shared/models/comment-response';
+
+import { ActivityLogService }
+from '../../../core/services/activity-log';
+
+import { ActivityLogResponse }
+from '../../../shared/models/activity-log-response';
+
 @Component({
   selector: 'app-task-list',
   standalone: true,
@@ -49,13 +61,24 @@ export class TaskListComponent {
 
   users: UserResponse[] = [];
 
+  comments:
+  { [taskId: number]: CommentResponse[] } = {};
+
+newComments:
+  { [taskId: number]: string } = {};
+
 selectedUsers:
   { [taskId: number]: number } = {};
+
+  activityLogs:
+  { [taskId: number]: ActivityLogResponse[] } = {};
 
   constructor(
     private taskService: TaskService,
     private projectService: ProjectService,
-    private userService: UserService
+    private userService: UserService,
+    private commentService: CommentService,
+    private activityLogService: ActivityLogService
   ) {}
 
   ngOnInit(): void {
@@ -84,6 +107,21 @@ selectedUsers:
         }
       });
   }
+
+  loadComments(
+  taskId: number
+): void {
+
+  this.commentService
+    .getComments(taskId)
+    .subscribe({
+
+      next: data => {
+
+        this.comments[taskId] = data;
+      }
+    });
+}
 
   loadProjects(): void {
 
@@ -116,6 +154,26 @@ selectedUsers:
       next: data => {
 
         this.users = data;
+      },
+
+      error: err => {
+
+        console.error(err);
+      }
+    });
+  }
+
+  loadActivityLogs(
+  taskId: number
+): void {
+
+  this.activityLogService
+    .getTaskActivity(taskId)
+    .subscribe({
+
+      next: data => {
+
+        this.activityLogs[taskId] = data;
       },
 
       error: err => {
@@ -292,4 +350,34 @@ selectedUsers:
       }
     });
 }  
+
+addComment(
+  taskId: number
+): void {
+
+  const message =
+    this.newComments[taskId];
+
+  if (!message) {
+
+    return;
+  }
+
+  this.commentService
+    .addComment(
+      taskId,
+      {
+        message
+      }
+    )
+    .subscribe({
+
+      next: () => {
+
+        this.newComments[taskId] = '';
+
+        this.loadComments(taskId);
+      }
+    });
+}
 }

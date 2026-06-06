@@ -1,100 +1,118 @@
-<h2>Projects</h2>
+<div class="projects-container">
 
-<table border="1">
+    <h2>📁 Projects</h2>
 
-    <thead>
+    <div class="projects-table">
 
-        <tr>
+        <table>
 
-            <th>ID</th>
+            <thead>
 
-            <th>Name</th>
+                <tr>
 
-            <th>Description</th>
+                    <th>ID</th>
 
-            <th>Created</th>
+                    <th>Name</th>
 
-            <th>Action</th>
+                    <th>Description</th>
 
-        </tr>
+                    <th>Created</th>
 
-    </thead>
+                    <th>Actions</th>
 
-    <tbody>
+                </tr>
 
-        <tr
-            *ngFor="let project of projects">
+            </thead>
 
-            <td>
-                {{ project.id }}
-            </td>
+            <tbody>
 
-            <td>
-                {{ project.name }}
-            </td>
+                <tr
+                    *ngFor="let project of projects">
 
-            <td>
-                {{ project.description }}
-            </td>
+                    <td>
+                        {{ project.id }}
+                    </td>
 
-            <td>
-                {{ project.createdAt }}
-            </td>
+                    <td>
+                        {{ project.name }}
+                    </td>
 
-            <td>
+                    <td>
+                        {{ project.description }}
+                    </td>
 
-                <button
-                    (click)="startEdit(project)">
+                    <td>
+                        {{ project.createdAt | date:'dd MMM yyyy' }}
+                    </td>
 
-                    Edit
+                    <td>
 
-                </button>
+                        <div class="action-buttons">
 
-                <button
-                    (click)="deleteProject(project.id)">
+                            <button
+                                class="edit-btn"
+                                (click)="startEdit(project)">
 
-                    Delete
+                                Edit
 
-                </button>
+                            </button>
 
-            </td>
+                            <button
+                                class="delete-btn"
+                                (click)="deleteProject(project.id)">
 
-        </tr>
+                                Delete
 
-    </tbody>
+                            </button>
 
-</table>
+                        </div>
 
-<h2>Create Project</h2>
+                    </td>
 
-<input
-    type="text"
-    placeholder="Project Name"
-    [(ngModel)]="name">
+                </tr>
 
-<br><br>
+            </tbody>
 
-<textarea
-    placeholder="Description"
-    [(ngModel)]="description">
-</textarea>
+        </table>
 
-<br><br>
+    </div>
 
-<button
-  *ngIf="editingProjectId === null"
-  (click)="createProject()">
+    <div class="project-form">
 
-  Create Project
+        <h2>
 
-</button>
+            {{ editingProjectId
+                ? 'Update Project'
+                : 'Create Project' }}
 
-<button
-  *ngIf="editingProjectId !== null"
-  (click)="updateProject()">
+        </h2>
 
-  Update Project
+        <input
+            type="text"
+            placeholder="Project Name"
+            [(ngModel)]="name">
 
-</button>
+        <textarea
+            placeholder="Description"
+            [(ngModel)]="description">
+        </textarea>
 
-<hr>
+        <button
+            *ngIf="editingProjectId === null"
+            (click)="createProject()">
+
+            Create Project
+
+        </button>
+
+        <button
+            *ngIf="editingProjectId !== null"
+            (click)="updateProject()">
+
+            Update Project
+
+        </button>
+
+    </div>
+
+</div>

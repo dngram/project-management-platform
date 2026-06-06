@@ -1,69 +1,70 @@
-<h2>Notifications</h2>
+<div class="notifications-container">
 
-<button
-  (click)="markAllAsRead()">
+  <div class="notifications-header">
 
-  Mark All As Read
+    <h2>🔔 Notifications</h2>
 
-</button>
+    <button
+      class="mark-all-btn"
+      (click)="markAllAsRead()">
 
-<br><br>
+      Mark All As Read
 
-<table border="1">
+    </button>
 
-  <thead>
+  </div>
 
-    <tr>
+  <div
+    *ngIf="notifications.length === 0"
+    class="empty-state">
 
-      <th>ID</th>
+    No notifications available.
 
-      <th>Message</th>
+  </div>
 
-      <th>Read</th>
+  <div
+    *ngFor="let notification of notifications"
+    class="notification-card">
 
-      <th>Created At</th>
+    <div class="notification-content">
 
-      <th>Action</th>
+      <p class="notification-message">
 
-    </tr>
-
-  </thead>
-
-  <tbody>
-
-    <tr
-      *ngFor="let notification of notifications">
-
-      <td>
-        {{ notification.id }}
-      </td>
-
-      <td>
         {{ notification.message }}
-      </td>
 
-      <td>
-        {{ notification.read }}
-      </td>
+      </p>
 
-      <td>
-        {{ notification.createdAt }}
-      </td>
+      <small>
 
-      <td>
+        {{ notification.createdAt | date:'dd MMM yyyy, hh:mm a' }}
 
-        <button
-          *ngIf="!notification.read"
-          (click)="markAsRead(notification.id)">
+      </small>
 
-          Mark Read
+    </div>
 
-        </button>
+    <div class="notification-actions">
 
-      </td>
+      <span
+        class="status-badge"
+        [ngClass]="{
+          'read': notification.read,
+          'unread': !notification.read
+        }">
 
-    </tr>
+        {{ notification.read ? 'Read' : 'Unread' }}
 
-  </tbody>
+      </span>
 
-</table>
+      <button
+        *ngIf="!notification.read"
+        (click)="markAsRead(notification.id)">
+
+        Mark Read
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

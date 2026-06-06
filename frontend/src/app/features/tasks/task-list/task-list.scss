@@ -1,0 +1,213 @@
+.tasks-container {
+
+  max-width: 1400px;
+
+  margin: 40px auto;
+
+  padding: 20px;
+}
+
+.section-card {
+
+  background: #1e293b;
+
+  border: 1px solid #334155;
+
+  border-radius: 16px;
+
+  padding: 24px;
+
+  margin-bottom: 30px;
+
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.task-actions {
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 8px;
+}
+
+.task-actions button {
+
+  min-width: 120px;
+}
+
+.assign-container {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.assign-container button {
+
+  width: 100%;
+}
+
+.task-form {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 12px;
+}
+
+.task-form button {
+
+  width: 220px;
+}
+
+.comments-section {
+
+  background: #1e293b;
+
+  border: 1px solid #334155;
+
+  border-radius: 16px;
+
+  padding: 24px;
+
+  margin-bottom: 30px;
+}
+
+.comment-card {
+
+  background: #0f172a;
+
+  border: 1px solid #334155;
+
+  border-radius: 12px;
+
+  padding: 16px;
+
+  margin-bottom: 20px;
+}
+
+.comment-card ul {
+
+  list-style: none;
+
+  padding-left: 0;
+}
+
+.comment-card li {
+
+  padding: 10px;
+
+  margin-bottom: 8px;
+
+  background: #1e293b;
+
+  border-radius: 8px;
+}
+
+.activity-section {
+
+  background: #1e293b;
+
+  border: 1px solid #334155;
+
+  border-radius: 16px;
+
+  padding: 24px;
+}
+
+.activity-card {
+
+  background: #0f172a;
+
+  border: 1px solid #334155;
+
+  border-radius: 12px;
+
+  padding: 16px;
+
+  margin-bottom: 20px;
+}
+
+.activity-card ul {
+
+  list-style: none;
+
+  padding-left: 0;
+}
+
+.activity-card li {
+
+  padding: 10px;
+
+  margin-bottom: 8px;
+
+  background: #1e293b;
+
+  border-radius: 8px;
+}
+
+.status-todo {
+
+  color: #f59e0b;
+
+  font-weight: 600;
+}
+
+.status-progress {
+
+  color: #3b82f6;
+
+  font-weight: 600;
+}
+
+.status-done {
+
+  color: #22c55e;
+
+  font-weight: 600;
+}
+
+.edit-btn {
+
+  background: #2563eb;
+}
+
+.edit-btn:hover {
+
+  background: #1d4ed8;
+}
+
+.delete-btn {
+
+  background: #ef4444;
+}
+
+.delete-btn:hover {
+
+  background: #dc2626;
+}
+
+.comment-btn {
+
+  background: #7c3aed;
+}
+
+.comment-btn:hover {
+
+  background: #6d28d9;
+}
+
+.activity-btn {
+
+  background: #0891b2;
+}
+
+.activity-btn:hover {
+
+  background: #0e7490;
+}

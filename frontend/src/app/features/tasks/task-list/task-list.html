@@ -1,6 +1,11 @@
-<h2>Tasks</h2>
+<div class="tasks-container">
 
-<table border="1">
+  <h2>✅ Tasks</h2>
+
+  <div class="section-card">
+
+```
+<table>
 
   <thead>
 
@@ -18,9 +23,9 @@
 
       <th>Assigned User</th>
 
-      <th>Actions</th>
-
       <th>Assign User</th>
+
+      <th>Actions</th>
 
     </tr>
 
@@ -28,8 +33,7 @@
 
   <tbody>
 
-    <tr
-      *ngFor="let task of tasks">
+    <tr *ngFor="let task of tasks">
 
       <td>
         {{ task.id }}
@@ -44,7 +48,18 @@
       </td>
 
       <td>
-        {{ task.status }}
+
+        <span
+          [ngClass]="{
+            'status-todo': task.status === 'TODO',
+            'status-progress': task.status === 'IN_PROGRESS',
+            'status-done': task.status === 'DONE'
+          }">
+
+          {{ task.status }}
+
+        </span>
+
       </td>
 
       <td>
@@ -52,55 +67,80 @@
       </td>
 
       <td>
-        {{ task.assignedUsername }}
+        {{ task.assignedUsername || 'Unassigned' }}
       </td>
 
       <td>
 
-        <select
+        <div class="assign-container">
+
+          <select
             [(ngModel)]="selectedUsers[task.id]">
 
-            <option
-            [ngValue]="null">
+            <option [ngValue]="null">
 
-            Select User
-
-            </option>
-
-            <option
-            *ngFor="let user of users"
-            [ngValue]="user.id">
-
-            {{ user.username }}
+              Select User
 
             </option>
 
-        </select>
+            <option
+              *ngFor="let user of users"
+              [ngValue]="user.id">
 
-        <button
+              {{ user.username }}
+
+            </option>
+
+          </select>
+
+          <button
             (click)="assignTask(task.id)">
 
             Assign
 
-        </button>
+          </button>
 
-        </td>
+        </div>
+
+      </td>
 
       <td>
 
-        <button
-          (click)="startEdit(task)">
+        <div class="task-actions">
 
-          Edit
+          <button
+            class="edit-btn"
+            (click)="startEdit(task)">
 
-        </button>
+            Edit
 
-        <button
-          (click)="deleteTask(task.id)">
+          </button>
 
-          Delete
+          <button
+            class="delete-btn"
+            (click)="deleteTask(task.id)">
 
-        </button>
+            Delete
+
+          </button>
+
+          <button
+            class="comment-btn"
+            (click)="loadComments(task.id)">
+
+            View Comments
+
+          </button>
+
+          <button
+            class="activity-btn"
+            (click)="loadActivityLogs(task.id)">
+
+            View Activity
+
+          </button>
+
+        </div>
 
       </td>
 
@@ -109,9 +149,13 @@
   </tbody>
 
 </table>
+```
 
-<hr>
+  </div>
 
+  <div class="section-card">
+
+```
 <h2>
 
   {{ editingTaskId
@@ -120,66 +164,186 @@
 
 </h2>
 
-<input
-  type="text"
-  placeholder="Task Title"
-  [(ngModel)]="title">
+<div class="task-form">
 
-<br><br>
+  <input
+    type="text"
+    placeholder="Task Title"
+    [(ngModel)]="title">
 
-<textarea
-  placeholder="Description"
-  [(ngModel)]="description">
-</textarea>
+  <textarea
+    placeholder="Description"
+    [(ngModel)]="description">
+  </textarea>
 
-<br><br>
+  <select
+    [(ngModel)]="status">
 
-<select
-  [(ngModel)]="status">
+    <option value="TODO">
+      TODO
+    </option>
 
-  <option value="TODO">
-    TODO
-  </option>
+    <option value="IN_PROGRESS">
+      IN_PROGRESS
+    </option>
 
-  <option value="IN_PROGRESS">
-    IN_PROGRESS
-  </option>
+    <option value="DONE">
+      DONE
+    </option>
 
-  <option value="DONE">
-    DONE
-  </option>
+  </select>
 
-</select>
+  <select
+    [(ngModel)]="projectId">
 
-<br><br>
+    <option
+      *ngFor="let project of projects"
+      [value]="project.id">
 
-<select
-  [(ngModel)]="projectId">
+      {{ project.name }}
 
-  <option
-    *ngFor="let project of projects"
-    [value]="project.id">
+    </option>
 
-    {{ project.name }}
+  </select>
 
-  </option>
+  <button
+    *ngIf="editingTaskId === null"
+    (click)="createTask()">
 
-</select>
+    Create Task
 
-<br><br>
+  </button>
 
-<button
-  *ngIf="editingTaskId === null"
-  (click)="createTask()">
+  <button
+    *ngIf="editingTaskId !== null"
+    (click)="updateTask()">
 
-  Create Task
+    Update Task
 
-</button>
+  </button>
 
-<button
-  *ngIf="editingTaskId !== null"
-  (click)="updateTask()">
+</div>
+```
 
-  Update Task
+  </div>
 
-</button>
+  <div class="comments-section">
+
+```
+<h2>💬 Task Comments</h2>
+
+<div
+  class="comment-card"
+  *ngFor="let task of tasks">
+
+  <h3>
+
+    {{ task.title }}
+
+  </h3>
+
+  <button
+    (click)="loadComments(task.id)">
+
+    Refresh Comments
+
+  </button>
+
+  <ul>
+
+    <li
+      *ngFor="
+        let comment
+        of comments[task.id]
+      ">
+
+      <strong>
+
+        {{ comment.username }}
+
+      </strong>
+
+      :
+
+      {{ comment.message }}
+
+    </li>
+
+  </ul>
+
+  <input
+    [(ngModel)]="
+      newComments[task.id]
+    "
+    placeholder="Add comment">
+
+  <button
+    (click)="addComment(task.id)">
+
+    Add Comment
+
+  </button>
+
+</div>
+```
+
+  </div>
+
+  <div class="activity-section">
+
+```
+<h2>📜 Task Activity Logs</h2>
+
+<div
+  class="activity-card"
+  *ngFor="let task of tasks">
+
+  <h3>
+
+    {{ task.title }}
+
+  </h3>
+
+  <button
+    (click)="loadActivityLogs(task.id)">
+
+    Refresh Activity
+
+  </button>
+
+  <ul>
+
+    <li
+      *ngFor="
+        let log
+        of activityLogs[task.id]
+      ">
+
+      <strong>
+
+        {{ log.username }}
+
+      </strong>
+
+      -
+
+      {{ log.action }}
+
+      <br>
+
+      <small>
+
+        {{ log.createdAt | date:'dd MMM yyyy, hh:mm a' }}
+
+      </small>
+
+    </li>
+
+  </ul>
+
+</div>
+```
+
+  </div>
+
+</div>

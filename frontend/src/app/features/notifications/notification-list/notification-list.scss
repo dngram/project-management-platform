@@ -1,0 +1,114 @@
+.notifications-container {
+
+  max-width: 1000px;
+
+  margin: 40px auto;
+
+  padding: 20px;
+}
+
+.notifications-header {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 24px;
+}
+
+.notification-card {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  background: #1e293b;
+
+  border: 1px solid #334155;
+
+  border-radius: 16px;
+
+  padding: 20px;
+
+  margin-bottom: 16px;
+
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.notification-message {
+
+  margin: 0;
+
+  color: #f8fafc;
+
+  font-size: 1rem;
+
+  font-weight: 500;
+}
+
+.notification-content small {
+
+  color: #94a3b8;
+}
+
+.notification-actions {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+.status-badge {
+
+  padding: 6px 12px;
+
+  border-radius: 20px;
+
+  font-size: 0.85rem;
+
+  font-weight: 600;
+}
+
+.unread {
+
+  background: #2563eb;
+
+  color: white;
+}
+
+.read {
+
+  background: #22c55e;
+
+  color: white;
+}
+
+.mark-all-btn {
+
+  background: #7c3aed;
+}
+
+.mark-all-btn:hover {
+
+  background: #6d28d9;
+}
+
+.empty-state {
+
+  text-align: center;
+
+  color: #94a3b8;
+
+  padding: 40px;
+
+  background: #1e293b;
+
+  border-radius: 16px;
+}

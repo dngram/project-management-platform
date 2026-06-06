@@ -1,52 +1,79 @@
-<h2>My Tasks</h2>
+<div class="tasks-container">
 
-<table border="1">
+  <h2>👤 My Tasks</h2>
 
-  <thead>
+  <div class="section-card">
 
-    <tr>
+    <table>
 
-      <th>ID</th>
+      <thead>
 
-      <th>Title</th>
+        <tr>
 
-      <th>Description</th>
+          <th>ID</th>
 
-      <th>Status</th>
+          <th>Title</th>
 
-      <th>Project</th>
+          <th>Description</th>
 
-    </tr>
+          <th>Status</th>
 
-  </thead>
+          <th>Project</th>
 
-  <tbody>
+        </tr>
 
-    <tr
-      *ngFor="let task of tasks">
+      </thead>
 
-      <td>
-        {{ task.id }}
-      </td>
+      <tbody>
 
-      <td>
-        {{ task.title }}
-      </td>
+        <tr
+          *ngFor="let task of tasks">
 
-      <td>
-        {{ task.description }}
-      </td>
+          <td>
+            {{ task.id }}
+          </td>
 
-      <td>
-        {{ task.status }}
-      </td>
+          <td>
+            {{ task.title }}
+          </td>
 
-      <td>
-        {{ task.projectName }}
-      </td>
+          <td>
+            {{ task.description }}
+          </td>
 
-    </tr>
+          <td>
 
-  </tbody>
+            <span
+              [ngClass]="{
+                'status-todo': task.status === 'TODO',
+                'status-progress': task.status === 'IN_PROGRESS',
+                'status-done': task.status === 'DONE'
+              }">
 
-</table>
+              {{ task.status }}
+
+            </span>
+
+          </td>
+
+          <td>
+            {{ task.projectName }}
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <div
+      *ngIf="tasks.length === 0"
+      class="empty-state">
+
+      No tasks assigned yet.
+
+    </div>
+
+  </div>
+
+</div>
