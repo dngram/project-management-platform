@@ -1,1 +1,69 @@
-<p>notification-list works!</p>
+<h2>Notifications</h2>
+
+<button
+  (click)="markAllAsRead()">
+
+  Mark All As Read
+
+</button>
+
+<br><br>
+
+<table border="1">
+
+  <thead>
+
+    <tr>
+
+      <th>ID</th>
+
+      <th>Message</th>
+
+      <th>Read</th>
+
+      <th>Created At</th>
+
+      <th>Action</th>
+
+    </tr>
+
+  </thead>
+
+  <tbody>
+
+    <tr
+      *ngFor="let notification of notifications">
+
+      <td>
+        {{ notification.id }}
+      </td>
+
+      <td>
+        {{ notification.message }}
+      </td>
+
+      <td>
+        {{ notification.read }}
+      </td>
+
+      <td>
+        {{ notification.createdAt }}
+      </td>
+
+      <td>
+
+        <button
+          *ngIf="!notification.read"
+          (click)="markAsRead(notification.id)">
+
+          Mark Read
+
+        </button>
+
+      </td>
+
+    </tr>
+
+  </tbody>
+
+</table>
