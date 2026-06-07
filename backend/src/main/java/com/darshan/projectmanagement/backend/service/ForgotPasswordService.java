@@ -37,6 +37,9 @@ public class ForgotPasswordService {
                 .orElseThrow(() ->
                         new RuntimeException("User not found"));
 
+        tokenRepository.findByUser(user)
+                .ifPresent(tokenRepository::delete);
+
         String token = UUID.randomUUID().toString();
 
         PasswordResetToken resetToken =
