@@ -1,5 +1,3 @@
+target
 .idea
-src
-.mvn
-mvnw
-mvnw.cmd
+.git
