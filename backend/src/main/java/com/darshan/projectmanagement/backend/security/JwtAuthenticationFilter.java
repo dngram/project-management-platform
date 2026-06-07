@@ -37,7 +37,7 @@ public class JwtAuthenticationFilter
             throws ServletException, IOException {
 
         String path = request.getServletPath();
-        
+
         if (path.startsWith("/api/auth")) {
 
             filterChain.doFilter(request, response);
