@@ -13,5 +13,7 @@ public interface PasswordResetTokenRepository
 
     Optional<PasswordResetToken> findByUser(User user);
 
+    void deleteByUser(User user);
+
     void deleteByToken(String token);
 }

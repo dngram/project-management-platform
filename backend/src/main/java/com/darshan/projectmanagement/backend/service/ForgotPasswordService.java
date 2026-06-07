@@ -7,6 +7,7 @@ import com.darshan.projectmanagement.backend.repository.PasswordResetTokenReposi
 import com.darshan.projectmanagement.backend.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -31,14 +32,15 @@ public class ForgotPasswordService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Transactional
     public void forgotPassword(String email) {
 
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() ->
                         new RuntimeException("User not found"));
 
-        tokenRepository.findByUser(user)
-                .ifPresent(tokenRepository::delete);
+        tokenRepository.deleteByUser(user);
+        tokenRepository.flush();
 
         String token = UUID.randomUUID().toString();
 
