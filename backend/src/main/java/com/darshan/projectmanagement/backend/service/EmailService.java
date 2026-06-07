@@ -20,7 +20,7 @@ public class EmailService {
             String token) {
 
         String resetLink =
-                "http://localhost:4200/reset-password?token="
+                "https://project-management-frontend-icvy.onrender.com/reset-password?token="
                         + token;
 
         SimpleMailMessage message =
